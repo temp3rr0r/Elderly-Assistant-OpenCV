@@ -1,10 +1,8 @@
 import cv2
 import numpy as np
 
-#calculate the average brightness of an image
-#used to work out if its night time and turn the alarms off
-def getMeanBrightness(img):	
-	
+# Calculate the average brightness of an image
+def getMeanBrightness(img):		
 	# Return the mean Val/Brightness from the HSV colour space of the image
 	return cv2.mean(cv2.cvtColor(img, cv2.COLOR_BGR2HSV)[:,:,2])[0]
 
@@ -13,7 +11,6 @@ def main():
         cap = cv2.VideoCapture(-1) # Load default video capture device
 	ret, frame = cap.read() # Load one frame from capture device
 	
-	#cv2.imwrite('border3.png',frame) # Store frame as png
 	meanBrightness = getMeanBrightness(frame)
 	print("Mean Brightness: " + str(meanBrightness))
 
@@ -23,18 +20,18 @@ def main():
 
 	thresholdCanny = 200
 	grayScale = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY) # Create grayscale image
-	grayScale = cv2.GaussianBlur(grayScale, (3, 3), 0) # Smooth edges	
+	grayScale = cv2.GaussianBlur(grayScale, (9, 9), 0) # Smooth edges	
 	circles = cv2.HoughCircles(grayScale, cv2.HOUGH_GRADIENT, \
 		# Inverse ratio of resolution
 		 1,\
 		# Minimum distance between centers
-		np.size(grayScale, 1) / 18,\
+		20,\
 		# Upper threshold for the internal Canny Edge detector
-		param1=20, \
+		param1=100, \
 		# Threshold for center detection
-		param2=200, \
-		minRadius=100, \
-		maxRadius=np.size(grayScale, 1)/2)
+		param2=50, \
+		minRadius=0, \
+		maxRadius=0)
 
 	if circles is not None:
 		print "Circles found: " + str(len(circles))
