@@ -23,11 +23,18 @@ def main():
 
 	thresholdCanny = 200
 	grayScale = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY) # Create grayscale image
-	edges = cv2.Canny(grayScale, thresholdCanny, thresholdCanny /2, 3) # Edge detection
-	smoothEdges = cv2.GaussianBlur(grayScale, (3, 3), 0)# Smooth edges
-	#houghCircles = cv2.HoughCircles(grayScale, cv2.HOUGH_GRADIENT, 2, grayScale.width / 18, thresholdCanny, 300, 0, 0)# TODO: Find hough circles
-
-	circles = cv2.HoughCircles(grayScale, cv2.HOUGH_GRADIENT, 1, 20, param1=50, param2=thresholdCanny, minRadius=0, maxRadius=0)
+	grayScale = cv2.GaussianBlur(grayScale, (3, 3), 0) # Smooth edges	
+	circles = cv2.HoughCircles(grayScale, cv2.HOUGH_GRADIENT, \
+		# Inverse ratio of resolution
+		 1,\
+		# Minimum distance between centers
+		np.size(grayScale, 1) / 18,\
+		# Upper threshold for the internal Canny Edge detector
+		param1=20, \
+		# Threshold for center detection
+		param2=200, \
+		minRadius=100, \
+		maxRadius=np.size(grayScale, 1)/2)
 
 	if circles is not None:
 		print "Circles found: " + str(len(circles))
@@ -40,8 +47,6 @@ def main():
 			cv2.circle(grayScale,(i[0],i[1]),2,(0,0,255),3) # draw the center of the circle
 
 	cv2.imwrite('grayScale.png', grayScale) # Store frame as png
-	cv2.imwrite('edges.png', edges) # Store frame as png
-	cv2.imwrite('smoothEdges.png', smoothEdges) # Store frame as png
 
 	cap.release()
 	cv2.destroyAllWindows()
