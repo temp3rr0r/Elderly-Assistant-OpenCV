@@ -1,0 +1,2 @@
+source ~/.profile
+workon cv
