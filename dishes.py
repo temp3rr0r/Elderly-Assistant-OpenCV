@@ -1,5 +1,15 @@
 import cv2
 import numpy as np
+import datetime
+import sqlite3
+
+def saveDishesCountDb(brightness, dishes):
+	conn = sqlite3.connect('dishes.db')
+	c = conn.cursor()
+	c.execute("INSERT INTO dishes VALUES (?, ?, ?)",(datetime.datetime.now(), brightness, dishes) )
+	conn.commit()
+	conn.close()
+
 
 # Calculate the average brightness of an image
 def getMeanBrightness(img):		
@@ -12,7 +22,7 @@ def main():
 	ret, frame = cap.read() # Load one frame from capture device
 	
 	meanBrightness = getMeanBrightness(frame)
-	print("Mean Brightness: " + str(meanBrightness))
+	#print("Mean Brightness: " + str(meanBrightness))
 
 	if meanBrightness < 30:
 		pring("Exiting, too low brightness")
@@ -27,23 +37,24 @@ def main():
 		# Minimum distance between centers
 		20,\
 		# Upper threshold for the internal Canny Edge detector
-		param1=100, \
+		param1=200, \
 		# Threshold for center detection
-		param2=50, \
+		param2=100, \
 		minRadius=0, \
 		maxRadius=0)
 
 	if circles is not None:
-		print "Circles found: " + str(len(circles))
-		print "Circles array: "
-		print circles
+		#print "Circles found: " + str(len(circles))
+		#print "Circles array: "
+		#print circles
+		saveDishesCountDb(meanBrightness, len(circles))
 
 		circles = np.uint16(np.around(circles))
 		for i in circles[0,:]:
-			cv2.circle(grayScale,(i[0],i[1]),i[2],(0,255,0),2) # draw the outer circle
-			cv2.circle(grayScale,(i[0],i[1]),2,(0,0,255),3) # draw the center of the circle
+			cv2.circle(frame,(i[0],i[1]),i[2],(0,255,0),2) # draw the outer circle
+			cv2.circle(frame,(i[0],i[1]),2,(0,0,255),3) # draw the center of the circle
 
-	cv2.imwrite('grayScale.png', grayScale) # Store frame as png
+	cv2.imwrite('frame.png', frame) # Store frame as png
 
 	cap.release()
 	cv2.destroyAllWindows()
