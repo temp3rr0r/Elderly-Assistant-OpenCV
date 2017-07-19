@@ -5,6 +5,7 @@ import sqlite3
 import time
 
 sleepInterval = 60 * 60 # 60 minutes
+verbose = False
 
 def saveDishesCountDb(brightness, dishes):
 	conn = sqlite3.connect('dishes.db')
@@ -26,10 +27,12 @@ def main():
 		ret, frame = cap.read() # Load one frame from capture device
 	
 		meanBrightness = getMeanBrightness(frame)
-		#print("Mean Brightness: " + str(meanBrightness))
+		if verbose:
+			print("Mean Brightness: " + str(meanBrightness))
 
 		if meanBrightness < 30:
-			pring("Exiting, too low brightness")
+			if verbose:
+				print("Exiting, too low brightness")
 			exit()
 
 		thresholdCanny = 200
@@ -48,9 +51,10 @@ def main():
 			maxRadius=0)
 
 		if circles is not None:
-			#print "Circles found: " + str(len(circles))
-			#print "Circles array: "
-			#print circles
+			if verbose:
+				print "Circles found: " + str(len(circles))
+				print "Circles array: "
+				print circles
 			saveDishesCountDb(meanBrightness, len(circles))
 
 			circles = np.uint16(np.around(circles))
