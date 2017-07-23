@@ -55,7 +55,7 @@ def main():
 				print "Circles found: " + str(len(circles[0]))
 				print "Circles array: "
 				print circles
-			saveDishesCountDb(meanBrightness, len(circles))
+			saveDishesCountDb(meanBrightness, len(circles[0]))
 
 			circles = np.uint16(np.around(circles))
 			for i in circles[0,:]:
