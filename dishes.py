@@ -52,7 +52,7 @@ def main():
 
 		if circles is not None:
 			if verbose:
-				print "Circles found: " + str(len(circles))
+				print "Circles found: " + str(len(circles[0]))
 				print "Circles array: "
 				print circles
 			saveDishesCountDb(meanBrightness, len(circles))
