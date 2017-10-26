@@ -9,10 +9,6 @@ A lightweight Computer vision service that can detect and count coffee mugs.
 - Nvidia Jetson Tk1 (Embedded ARM-GPGPU accelerated computer).
 - Logitech C920 (USB camera).
 
-### Software ###
-- Nvidia Jetson Tk1 (Embedded ARM-GPGPU accelerated computer).
-- Logitech C920 (USB camera).
-
 ### Libraries ###
 - OpenCV 3.4 (Open Computer Vision, http://opencv.org/).
 - Python (https://www.python.org/).
