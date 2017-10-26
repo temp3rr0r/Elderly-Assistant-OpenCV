@@ -17,3 +17,4 @@ A lightweight Computer vision service that can detect and count coffee mugs.
 - OpenCV 3.4 (Open Computer Vision, http://opencv.org/).
 - Python (https://www.python.org/).
 - SQLite (https://www.sqlite.org/).
+- Flask (http://flask.pocoo.org/).
