@@ -14,6 +14,6 @@ A lightweight Computer vision service that can detect and count coffee mugs.
 - Logitech C920 (USB camera).
 
 ### Libraries ###
-- OpenCV (Open Computer Vision, http://opencv.org/).
-- Node.js (https://nodejs.org/en/).
+- OpenCV 3.4 (Open Computer Vision, http://opencv.org/).
+- Python (https://www.python.org/).
 - SQLite (https://www.sqlite.org/).
