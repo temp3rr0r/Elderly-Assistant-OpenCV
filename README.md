@@ -1,5 +1,5 @@
-# README #
-Elderly Assistant 101
+# Elderly Assistant 101 #
+
 A wearable, voice-interacting Internet of Things device, that monitors seniors and helps with household activities (https://devpost.com/software/elderly-assistant-101).
 
 ### What is this repository for? ###
